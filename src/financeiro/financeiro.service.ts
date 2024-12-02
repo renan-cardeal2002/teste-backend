@@ -13,7 +13,7 @@ export class FinanceiroService {
   ) {}
 
   create(createFinanceiroDto: CreateFinanceiroDto) {
-    return 'This action adds a new financeiro';
+    return this.financeiroRepository.create(createFinanceiroDto);
   }
 
   findAll() {
@@ -21,14 +21,14 @@ export class FinanceiroService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} financeiro`;
+    return this.financeiroRepository.findOneBy({ id });
   }
 
   update(id: number, updateFinanceiroDto: UpdateFinanceiroDto) {
-    return `This action updates a #${id} financeiro`;
+    return this.financeiroRepository.update(id, updateFinanceiroDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} financeiro`;
+    return this.financeiroRepository.delete(id);
   }
 }
