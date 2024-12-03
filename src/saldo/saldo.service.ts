@@ -74,8 +74,8 @@ export class SaldoService {
   async movimentarSaldoCliente(movimentoDto: CreateMovimentoDto) {
     const dadosCliente = await this.getDadosCliente(movimentoDto.cliente_id);
     const { financeiroCliente } = dadosCliente;
-    let newSaldo = financeiroCliente.saldo;
-    let newLimiteUtilizado = financeiroCliente.limite_utilizado;
+    let newSaldo = Number(financeiroCliente.saldo);
+    let newLimiteUtilizado = Number(financeiroCliente.limite_utilizado);
 
     if (financeiroCliente.plano_id == PlanoEnum.prePago) {
       if (movimentoDto.tipo === TipoMovimento.debito) {
@@ -88,10 +88,10 @@ export class SaldoService {
 
     if (financeiroCliente.plano_id == PlanoEnum.posPago) {
       if (movimentoDto.tipo === TipoMovimento.debito) {
-        newLimiteUtilizado -= movimentoDto.valor;
+        newLimiteUtilizado += movimentoDto.valor;
       }
       if (movimentoDto.tipo === TipoMovimento.credito) {
-        newLimiteUtilizado += movimentoDto.valor;
+        newLimiteUtilizado -= movimentoDto.valor;
       }
     }
 
