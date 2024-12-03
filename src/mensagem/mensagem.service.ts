@@ -16,7 +16,7 @@ export class MensagemService {
   ) {}
 
   async create(mensagem: Partial<Mensagem>): Promise<Mensagem> {
-    const podeEnviar = await this.saldoService.verificaPodeEnviarMensagem(
+    const podeEnviar = await this.saldoService.verificaSaldoLimite(
       mensagem?.cliente_id,
     );
 
@@ -32,9 +32,7 @@ export class MensagemService {
       tipo: TipoMovimento.debito,
       valor: VALOR_DEFAULT_MSG,
     };
-
     await this.movimentoService.create(movimentoDto);
-    await this.saldoService.movimentarSaldoCliente(movimentoDto);
     const novaMensagem = this.mensagemRepository.create(mensagem);
     return this.mensagemRepository.save(novaMensagem);
   }

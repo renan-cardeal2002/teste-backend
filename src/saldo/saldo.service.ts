@@ -53,7 +53,7 @@ export class SaldoService {
     };
   }
 
-  async verificaPodeEnviarMensagem(client_id: number): Promise<boolean> {
+  async verificaSaldoLimite(client_id: number): Promise<boolean> {
     const dadosCliente = await this.getDadosCliente(client_id);
     const { financeiroCliente } = dadosCliente;
 

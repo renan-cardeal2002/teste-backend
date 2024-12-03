@@ -3,17 +3,21 @@ import { CreateMovimentoDto } from './dto/create-movimento.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Movimento } from './entities/movimento.entity';
+import { SaldoService } from '../saldo/saldo.service';
 
 @Injectable()
 export class MovimentoService {
   constructor(
     @InjectRepository(Movimento)
     private movimentoRepository: Repository<Movimento>,
+    private saldoService: SaldoService,
   ) {}
 
-  create(createMovimentoDto: CreateMovimentoDto) {
+  async create(createMovimentoDto: CreateMovimentoDto) {
     const novoMovimento = this.movimentoRepository.create(createMovimentoDto);
-    return this.movimentoRepository.save(novoMovimento);
+    const movimentoCriado = await this.movimentoRepository.save(novoMovimento);
+    await this.saldoService.movimentarSaldoCliente(createMovimentoDto);
+    return movimentoCriado;
   }
 
   findAll() {
