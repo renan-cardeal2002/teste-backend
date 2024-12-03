@@ -11,12 +11,12 @@ export class Saldo {
   @Column()
   plano_id: number;
 
-  @Column()
+  @Column({ type: 'float' })
   saldo: number;
 
-  @Column()
+  @Column({ type: 'float' })
   limite_mensal: number;
 
-  @Column()
+  @Column({ type: 'float' })
   limite_utilizado: number;
 }

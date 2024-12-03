@@ -12,7 +12,7 @@ export class Movimento {
   @Column()
   tipo: TipoMovimento;
 
-  @Column()
+  @Column({ type: 'float' })
   valor: number;
 
   @Column()
