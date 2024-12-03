@@ -8,5 +8,6 @@ import { Saldo } from './entities/saldo.entity';
   imports: [TypeOrmModule.forFeature([Saldo])],
   controllers: [SaldoController],
   providers: [SaldoService],
+  exports: [SaldoService],
 })
 export class SaldoModule {}

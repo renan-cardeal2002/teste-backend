@@ -8,5 +8,6 @@ import { Plano } from './entities/plano.entity';
   imports: [TypeOrmModule.forFeature([Plano])],
   controllers: [PlanoController],
   providers: [PlanoService],
+  exports: [PlanoService],
 })
 export class PlanoModule {}

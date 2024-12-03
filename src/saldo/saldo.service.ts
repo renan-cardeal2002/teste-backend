@@ -26,7 +26,7 @@ export class SaldoService {
 
   async consultarSaldoCliente(cliente_id: number) {
     return {
-      saldo: (await this.saldoRepository.findOneBy({ cliente_id })).saldo,
+      saldo: (await this.saldoRepository.findOneBy({ cliente_id }))?.saldo || 0,
     };
   }
 

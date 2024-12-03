@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS movimentos
 (
     id              SERIAL PRIMARY KEY,
     cliente_id      INT NOT NULL,
-    tipo            VARCHAR(1) NOT NULL, -- <C> crédito ou <D> débito
+    tipo            INT NOT NULL,
     valor           DECIMAL(10, 2) NOT NULL,
     observacao      VARCHAR(200)
 );

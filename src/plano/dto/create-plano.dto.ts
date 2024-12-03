@@ -1,4 +1,4 @@
 export class CreatePlanoDto {
-  tipo: string;
+  tipo: number;
   limite_utilizado: number;
 }

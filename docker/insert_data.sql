@@ -7,10 +7,10 @@ VALUES ('Renan Cardeal', 'grupo_irrah@example.com', '44999998888', '12345678900'
 
 INSERT INTO planos
     (tipo, limite_mensal)
-VALUES ('pre-pago', 0.00),
-       ('pos-pago', 100.00);
+VALUES (0, 0.00),
+       (1, 100.00);
 
-INSERT INTO financeiro
+INSERT INTO saldo
     (cliente_id, plano_id, saldo, limite_utilizado)
 VALUES (1, 1, 0.00, 0.00),
        (2, 2, 0.00, 0.00);

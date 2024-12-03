@@ -6,7 +6,7 @@ export class Plano {
   id: number;
 
   @Column()
-  tipo: string;
+  tipo: number;
 
   @Column()
   limite_mensal: number;
