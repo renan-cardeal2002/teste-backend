@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePlanoDto } from './dto/create-plano.dto';
-import { UpdatePlanoDto } from './dto/update-plano.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Plano } from './entities/plano.entity';
@@ -22,13 +21,5 @@ export class PlanoService {
 
   findOne(id: number) {
     return this.planoRepository.findOneBy({ id });
-  }
-
-  update(id: number, updatePlanoDto: UpdatePlanoDto) {
-    return this.planoRepository.update(id, updatePlanoDto);
-  }
-
-  remove(id: number) {
-    return this.planoRepository.delete({ id });
   }
 }

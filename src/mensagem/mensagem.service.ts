@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { UpdateMensagemDto } from './dto/update-mensagem.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Mensagem } from './entities/mensagem.entity';
@@ -22,7 +21,9 @@ export class MensagemService {
     );
 
     if (!podeEnviar) {
-      return;
+      throw new BadRequestException(
+        'Cliente não possui saldo suficiente ou limite disponível para enviar a mensagem.',
+      );
     }
 
     const novaMensagem = this.mensagemRepository.create(mensagem);
@@ -35,14 +36,6 @@ export class MensagemService {
 
   findOne(id: number) {
     return this.mensagemRepository.findOneBy({ id });
-  }
-
-  update(id: number, updateMensagemDto: UpdateMensagemDto) {
-    return this.mensagemRepository.update(id, updateMensagemDto);
-  }
-
-  remove(id: number) {
-    return this.mensagemRepository.delete({ id });
   }
 
   private async getDadosCliente(cliente_id: number) {

@@ -13,7 +13,8 @@ export class ClienteService {
   ) {}
 
   create(createClienteDto: CreateClienteDto) {
-    return this.clienteRepository.create(createClienteDto);
+    const novoCliente = this.clienteRepository.create(createClienteDto);
+    return this.clienteRepository.save(novoCliente);
   }
 
   findAll(): Promise<Cliente[]> {
@@ -26,9 +27,5 @@ export class ClienteService {
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
     return this.clienteRepository.update(id, updateClienteDto);
-  }
-
-  remove(id: number) {
-    return this.clienteRepository.delete({ id });
   }
 }
