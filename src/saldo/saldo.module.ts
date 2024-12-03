@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { SaldoService } from './saldo.service';
 import { SaldoController } from './saldo.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Financeiro } from './entities/saldo.entity';
+import { Saldo } from './entities/saldo.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Financeiro])],
+  imports: [TypeOrmModule.forFeature([Saldo])],
   controllers: [SaldoController],
   providers: [SaldoService],
 })

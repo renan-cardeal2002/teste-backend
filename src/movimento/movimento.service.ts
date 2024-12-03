@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMovimentoDto } from './dto/create-movimento.dto';
 import { UpdateMovimentoDto } from './dto/update-movimento.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Movimento } from './entities/movimento.entity';
 
 @Injectable()
 export class MovimentoService {
+  constructor(
+    @InjectRepository(Movimento)
+    private movimentoRepository: Repository<Movimento>,
+  ) {}
+
   create(createMovimentoDto: CreateMovimentoDto) {
-    return 'This action adds a new movimento';
+    return this.movimentoRepository.create(createMovimentoDto);
   }
 
   findAll() {
-    return `This action returns all movimento`;
+    return this.movimentoRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} movimento`;
+    return this.movimentoRepository.findOneBy({ id });
   }
 
   update(id: number, updateMovimentoDto: UpdateMovimentoDto) {
-    return `This action updates a #${id} movimento`;
+    return this.movimentoRepository.update({ id }, updateMovimentoDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} movimento`;
+    return this.movimentoRepository.delete({ id });
   }
 }

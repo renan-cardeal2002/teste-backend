@@ -12,8 +12,9 @@ export class MensagemService {
     private mensagemRepository: Repository<Mensagem>,
   ) {}
 
-  create(createMensagemDto: CreateMensagemDto) {
-    return 'This action adds a new mensagem';
+  async create(mensagem: Partial<Mensagem>): Promise<Mensagem> {
+    const novaMensagem = this.mensagemRepository.create(mensagem);
+    return this.mensagemRepository.save(novaMensagem);
   }
 
   findAll() {
@@ -21,14 +22,14 @@ export class MensagemService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} mensagem`;
+    return this.mensagemRepository.findOneBy({ id });
   }
 
   update(id: number, updateMensagemDto: UpdateMensagemDto) {
-    return `This action updates a #${id} mensagem`;
+    return this.mensagemRepository.update(id, updateMensagemDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} mensagem`;
+    return this.mensagemRepository.delete({ id });
   }
 }
