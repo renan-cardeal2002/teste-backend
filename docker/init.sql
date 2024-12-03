@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS planos
     limite_mensal DECIMAL(10, 2) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS financeiro
+CREATE TABLE IF NOT EXISTS saldo
 (
     id               SERIAL PRIMARY KEY,
     cliente_id       INT NOT NULL,
@@ -26,6 +26,15 @@ CREATE TABLE IF NOT EXISTS financeiro
     limite_utilizado DECIMAL(10, 2) DEFAULT 0.00,
     FOREIGN KEY (cliente_id) REFERENCES clientes (id),
     FOREIGN KEY (plano_id) REFERENCES planos (id)
+);
+
+CREATE TABLE IF NOT EXISTS movimentos
+(
+    id              SERIAL PRIMARY KEY,
+    cliente_id      INT NOT NULL,
+    tipo            VARCHAR(1) NOT NULL, -- <C> crédito ou <D> débito
+    valor           DECIMAL(10, 2) NOT NULL,
+    observacao      VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS mensagens

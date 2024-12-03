@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFinanceiroDto } from './dto/create-financeiro.dto';
-import { UpdateFinanceiroDto } from './dto/update-financeiro.dto';
+import { CreateSaldoDto } from './dto/create-saldo.dto';
+import { UpdateSaldoDto } from './dto/update-saldo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Financeiro } from './entities/financeiro.entity';
+import { Financeiro } from './entities/saldo.entity';
 
 @Injectable()
-export class FinanceiroService {
+export class SaldoService {
   constructor(
     @InjectRepository(Financeiro)
     private financeiroRepository: Repository<Financeiro>,
   ) {}
 
-  create(createFinanceiroDto: CreateFinanceiroDto) {
+  create(createFinanceiroDto: CreateSaldoDto) {
     return this.financeiroRepository.create(createFinanceiroDto);
   }
 
@@ -24,7 +24,17 @@ export class FinanceiroService {
     return this.financeiroRepository.findOneBy({ id });
   }
 
-  update(id: number, updateFinanceiroDto: UpdateFinanceiroDto) {
+  async consultarSaldoCliente(cliente_id: number) {
+    return {
+      saldo: (await this.financeiroRepository.findOneBy({ cliente_id })).saldo,
+    };
+  }
+
+  findByClienteID(cliente_id: number) {
+    return this.financeiroRepository.findOneBy({ cliente_id });
+  }
+
+  update(id: number, updateFinanceiroDto: UpdateSaldoDto) {
     return this.financeiroRepository.update(id, updateFinanceiroDto);
   }
 
