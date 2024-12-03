@@ -5,13 +5,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Saldo } from './entities/saldo.entity';
 import { CreateMovimentoDto } from '../movimento/dto/create-movimento.dto';
-import { TipoMovimento } from '../movimento/enums/tipo.enum';
+import { TipoMovimento, VALOR_DEFAULT_MSG } from '../movimento/enums/tipo.enum';
+import { PlanoEnum } from '../cliente/enums/plano.enum';
+import { ClienteService } from '../cliente/cliente.service';
 
 @Injectable()
 export class SaldoService {
   constructor(
     @InjectRepository(Saldo)
     private saldoRepository: Repository<Saldo>,
+    private clienteService: ClienteService,
   ) {}
 
   create(createFinanceiroDto: CreateSaldoDto) {
@@ -40,20 +43,61 @@ export class SaldoService {
     return this.saldoRepository.update({ id }, updateFinanceiroDto);
   }
 
-  async movimentarSaldoCliente(movimentoDto: CreateMovimentoDto) {
-    const saldo = await this.consultarSaldoCliente(movimentoDto.cliente_id);
-    let newSaldo = saldo.saldo;
+  private async getDadosCliente(cliente_id: number) {
+    const financeiroCliente = await this.findByClienteID(cliente_id);
+    const cliente = await this.clienteService.findOne(cliente_id);
 
-    if (movimentoDto.tipo === TipoMovimento.debito) {
-      newSaldo -= movimentoDto.valor;
+    return {
+      financeiroCliente,
+      cliente,
+    };
+  }
+
+  async verificaPodeEnviarMensagem(client_id: number): Promise<boolean> {
+    const dadosCliente = await this.getDadosCliente(client_id);
+    const { financeiroCliente } = dadosCliente;
+
+    if (financeiroCliente.plano_id === PlanoEnum.prePago) {
+      return financeiroCliente.saldo >= VALOR_DEFAULT_MSG;
     }
-    if (movimentoDto.tipo === TipoMovimento.credito) {
-      newSaldo += movimentoDto.valor;
+
+    if (financeiroCliente.plano_id === PlanoEnum.posPago) {
+      return (
+        financeiroCliente.limite_mensal >=
+        financeiroCliente.limite_utilizado + VALOR_DEFAULT_MSG
+      );
+    }
+
+    return false;
+  }
+
+  async movimentarSaldoCliente(movimentoDto: CreateMovimentoDto) {
+    const dadosCliente = await this.getDadosCliente(movimentoDto.cliente_id);
+    const { financeiroCliente } = dadosCliente;
+    let newSaldo = financeiroCliente.saldo;
+    let newLimiteUtilizado = financeiroCliente.limite_utilizado;
+
+    if (financeiroCliente.plano_id == PlanoEnum.prePago) {
+      if (movimentoDto.tipo === TipoMovimento.debito) {
+        newSaldo -= movimentoDto.valor;
+      }
+      if (movimentoDto.tipo === TipoMovimento.credito) {
+        newSaldo += movimentoDto.valor;
+      }
+    }
+
+    if (financeiroCliente.plano_id == PlanoEnum.posPago) {
+      if (movimentoDto.tipo === TipoMovimento.debito) {
+        newLimiteUtilizado -= movimentoDto.valor;
+      }
+      if (movimentoDto.tipo === TipoMovimento.credito) {
+        newLimiteUtilizado += movimentoDto.valor;
+      }
     }
 
     await this.saldoRepository.update(
       { cliente_id: movimentoDto.cliente_id },
-      { saldo: newSaldo },
+      { saldo: newSaldo, limite_utilizado: newLimiteUtilizado },
     );
   }
 }

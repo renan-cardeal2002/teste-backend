@@ -5,16 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Mensagem } from './entities/mensagem.entity';
 import { MensagemGateway } from './mensagem.gateway';
 import { SaldoModule } from '../saldo/saldo.module';
-import { ClienteModule } from '../cliente/cliente.module';
 import { MovimentoModule } from '../movimento/movimento.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Mensagem]),
-    SaldoModule,
-    ClienteModule,
-    MovimentoModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Mensagem]), SaldoModule, MovimentoModule],
   controllers: [MensagemController],
   providers: [MensagemService, MensagemGateway],
 })
