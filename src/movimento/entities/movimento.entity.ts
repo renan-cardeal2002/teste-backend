@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TipoMovimento } from '../enums/tipo.enum';
 
 @Entity('movimentos')
 export class Movimento {
@@ -9,7 +10,7 @@ export class Movimento {
   cliente_id: number;
 
   @Column()
-  tipo: string;
+  tipo: TipoMovimento;
 
   @Column()
   valor: number;

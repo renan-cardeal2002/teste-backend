@@ -6,6 +6,7 @@ import { SaldoService } from '../saldo/saldo.service';
 import { PlanoEnum } from '../cliente/enums/plano.enum';
 import { ClienteService } from '../cliente/cliente.service';
 import { MovimentoService } from '../movimento/movimento.service';
+import { TipoMovimento, VALOR_DEFAULT_MSG } from '../movimento/enums/tipo.enum';
 
 @Injectable()
 export class MensagemService {
@@ -28,13 +29,15 @@ export class MensagemService {
       );
     }
 
-    await this.movimentoService.create({
+    const movimentoDto = {
       cliente_id: mensagem.cliente_id,
       observacao: 'Movimento gerado automáticamente',
-      tipo: 'D',
-      valor: 0.25,
-    });
+      tipo: TipoMovimento.debito,
+      valor: VALOR_DEFAULT_MSG,
+    };
 
+    await this.movimentoService.create(movimentoDto);
+    await this.saldoService.movimentarSaldoCliente(movimentoDto);
     const novaMensagem = this.mensagemRepository.create(mensagem);
     return this.mensagemRepository.save(novaMensagem);
   }
@@ -66,7 +69,7 @@ export class MensagemService {
     const { financeiroCliente } = dadosCliente;
 
     if (financeiroCliente.plano_id === PlanoEnum.prePago) {
-      return financeiroCliente.saldo >= 0.25;
+      return financeiroCliente.saldo >= VALOR_DEFAULT_MSG;
     }
 
     if (financeiroCliente.plano_id === PlanoEnum.posPago) {

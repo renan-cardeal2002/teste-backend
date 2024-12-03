@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { SaldoService } from './saldo.service';
 import { CreateSaldoDto } from './dto/create-saldo.dto';
 import { UpdateSaldoDto } from './dto/update-saldo.dto';
@@ -43,10 +35,5 @@ export class SaldoController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFinanceiroDto: UpdateSaldoDto) {
     return this.financeiroService.update(+id, updateFinanceiroDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.financeiroService.remove(+id);
   }
 }
