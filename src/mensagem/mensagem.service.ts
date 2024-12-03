@@ -3,16 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Mensagem } from './entities/mensagem.entity';
 import { SaldoService } from '../saldo/saldo.service';
-import { PlanoService } from '../plano/plano.service';
-import { PlanoEnum } from '../plano/enums/plano.enum';
+import { PlanoEnum } from '../cliente/enums/plano.enum';
+import { ClienteService } from '../cliente/cliente.service';
+import { MovimentoService } from '../movimento/movimento.service';
 
 @Injectable()
 export class MensagemService {
   constructor(
     @InjectRepository(Mensagem)
     private mensagemRepository: Repository<Mensagem>,
+    private clienteService: ClienteService,
     private saldoService: SaldoService,
-    private planoService: PlanoService,
+    private movimentoService: MovimentoService,
   ) {}
 
   async create(mensagem: Partial<Mensagem>): Promise<Mensagem> {
@@ -25,6 +27,13 @@ export class MensagemService {
         'Cliente não possui saldo suficiente ou limite disponível para enviar a mensagem.',
       );
     }
+
+    await this.movimentoService.create({
+      cliente_id: mensagem.cliente_id,
+      observacao: 'Movimento gerado automáticamente',
+      tipo: 'D',
+      valor: 0.25,
+    });
 
     const novaMensagem = this.mensagemRepository.create(mensagem);
     return this.mensagemRepository.save(novaMensagem);
@@ -41,13 +50,12 @@ export class MensagemService {
   private async getDadosCliente(cliente_id: number) {
     const financeiroCliente =
       await this.saldoService.findByClienteID(cliente_id);
-    const planoCliente = await this.planoService.findOne(
-      financeiroCliente?.plano_id,
-    );
+
+    const cliente = await this.clienteService.findOne(cliente_id);
 
     return {
       financeiroCliente,
-      planoCliente,
+      cliente,
     };
   }
 
@@ -55,14 +63,16 @@ export class MensagemService {
     client_id: number,
   ): Promise<boolean> {
     const dadosCliente = await this.getDadosCliente(client_id);
-    const { planoCliente, financeiroCliente } = dadosCliente;
+    const { financeiroCliente } = dadosCliente;
 
-    if (planoCliente.tipo === PlanoEnum.prePago) {
+    if (financeiroCliente.plano_id === PlanoEnum.prePago) {
       return financeiroCliente.saldo >= 0.25;
     }
 
-    if (planoCliente.tipo === PlanoEnum.posPago) {
-      return planoCliente.limite_mensal >= financeiroCliente.limite_utilizado;
+    if (financeiroCliente.plano_id === PlanoEnum.posPago) {
+      return (
+        financeiroCliente.limite_mensal >= financeiroCliente.limite_utilizado
+      );
     }
 
     return false;

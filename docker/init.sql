@@ -10,22 +10,15 @@ CREATE TABLE IF NOT EXISTS clientes
     senha           VARCHAR(30)  NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS planos
-(
-    id            SERIAL PRIMARY KEY,
-    tipo          VARCHAR(10)    NOT NULL, -- 'pre-pago' ou 'pos-pago'
-    limite_mensal DECIMAL(10, 2) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS saldo
+CREATE TABLE IF NOT EXISTS financeiro
 (
     id               SERIAL PRIMARY KEY,
     cliente_id       INT NOT NULL,
     plano_id         INT NOT NULL,
     saldo            DECIMAL(10, 2) DEFAULT 0.00,
+    limite_mensal    DECIMAL(10, 2) DEFAULT 0.00,
     limite_utilizado DECIMAL(10, 2) DEFAULT 0.00,
-    FOREIGN KEY (cliente_id) REFERENCES clientes (id),
-    FOREIGN KEY (plano_id) REFERENCES planos (id)
+    FOREIGN KEY (cliente_id) REFERENCES clientes (id)
 );
 
 CREATE TABLE IF NOT EXISTS movimentos
@@ -45,7 +38,7 @@ CREATE TABLE IF NOT EXISTS mensagens
     is_whatsapp    BOOLEAN       DEFAULT FALSE,
     texto          TEXT        NOT NULL,
     data_envio     TIMESTAMP     DEFAULT NOW(),
-    custo          DECIMAL(5, 2) DEFAULT 0.25, -- Valor fixo por SMS
+    custo          DECIMAL(5, 2) DEFAULT 0.25,
     FOREIGN KEY (cliente_id) REFERENCES clientes (id)
 );
 

@@ -12,7 +12,8 @@ export class MovimentoService {
   ) {}
 
   create(createMovimentoDto: CreateMovimentoDto) {
-    return this.movimentoRepository.create(createMovimentoDto);
+    const novoMovimento = this.movimentoRepository.create(createMovimentoDto);
+    return this.movimentoRepository.save(novoMovimento);
   }
 
   findAll() {

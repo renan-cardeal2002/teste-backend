@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('saldo')
+@Entity('financeiro')
 export class Saldo {
   @PrimaryGeneratedColumn()
   id: number;
@@ -13,6 +13,9 @@ export class Saldo {
 
   @Column()
   saldo: number;
+
+  @Column()
+  limite_mensal: number;
 
   @Column()
   limite_utilizado: number;

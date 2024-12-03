@@ -8,8 +8,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Cliente } from './cliente/entities/cliente.entity';
 import { Saldo } from './saldo/entities/saldo.entity';
 import { Mensagem } from './mensagem/entities/mensagem.entity';
-import { PlanoModule } from './plano/plano.module';
-import { Plano } from './plano/entities/plano.entity';
 import { MovimentoModule } from './movimento/movimento.module';
 import { Movimento } from './movimento/entities/movimento.entity';
 
@@ -18,7 +16,6 @@ import { Movimento } from './movimento/entities/movimento.entity';
     ClienteModule,
     MensagemModule,
     SaldoModule,
-    PlanoModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -26,7 +23,7 @@ import { Movimento } from './movimento/entities/movimento.entity';
       username: 'user',
       password: 'password',
       database: 'database',
-      entities: [Cliente, Saldo, Movimento, Mensagem, Plano],
+      entities: [Cliente, Saldo, Movimento, Mensagem],
       synchronize: false,
     }),
     MovimentoModule,
