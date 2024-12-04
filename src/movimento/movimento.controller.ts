@@ -16,6 +16,11 @@ export class MovimentoController {
     return this.movimentoService.findAll();
   }
 
+  @Get('cliente/:id')
+  findByClienteID(@Param('id') cliente_id: string) {
+    return this.movimentoService.findByClienteID(+cliente_id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.movimentoService.findOne(+id);

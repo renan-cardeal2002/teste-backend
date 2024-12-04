@@ -19,7 +19,4 @@ export class Mensagem {
 
   @Column()
   data_envio: Date;
-
-  @Column()
-  custo: number;
 }

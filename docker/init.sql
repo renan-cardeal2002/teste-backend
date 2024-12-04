@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS mensagens
     is_whatsapp    BOOLEAN       DEFAULT FALSE,
     texto          TEXT        NOT NULL,
     data_envio     TIMESTAMP     DEFAULT NOW(),
-    custo          DECIMAL(5, 2) DEFAULT 0.25,
     FOREIGN KEY (cliente_id) REFERENCES clientes (id)
 );
 
