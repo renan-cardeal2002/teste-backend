@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { MensagemService } from './mensagem.service';
 import { CreateMensagemDto } from './dto/create-mensagem.dto';
 
@@ -12,8 +12,8 @@ export class MensagemController {
   }
 
   @Get()
-  findAll() {
-    return this.mensagemService.findAll();
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.mensagemService.findAll(page, limit);
   }
 
   @Get(':id')

@@ -54,8 +54,12 @@ export class MensagemService {
     }
   }
 
-  findAll() {
-    return this.mensagemRepository.find();
+  findAll(page: number = 1, limit: number = 10) {
+    return this.mensagemRepository.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { data_envio: 'DESC' },
+    });
   }
 
   findOne(id: number) {
