@@ -24,6 +24,10 @@ export class MovimentoService {
     return this.movimentoRepository.find();
   }
 
+  findByClienteID(cliente_id: number) {
+    return this.movimentoRepository.findOneBy({ cliente_id });
+  }
+
   findOne(id: number) {
     return this.movimentoRepository.findOneBy({ id });
   }

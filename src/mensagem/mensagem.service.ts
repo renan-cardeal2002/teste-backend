@@ -28,7 +28,7 @@ export class MensagemService {
 
     const movimentoDto = {
       cliente_id: mensagem.cliente_id,
-      observacao: 'Movimento gerado automáticamente',
+      observacao: 'envio de mensagem',
       tipo: TipoMovimento.debito,
       valor: VALOR_DEFAULT_MSG,
     };

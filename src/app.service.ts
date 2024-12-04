@@ -50,13 +50,11 @@ export class AppService {
       <div>ROTAS CRIADAS</div>
       <div class="routes">
         <ul>
-          <li>[post] {url}/importarCadastros -- insere os dados do ambiente de apresentação</li>
-          <li>[get] {url}/consultarSaldoCliente</li>
-          <li>[get] {url}/consultarMovimentosCliente</li>
-          <li>[get] {url}/consultarDadosCliente</li>
-          <li>[post] {url}/inserirMovimentoCliente</li>
-          <li>[put] {url}/alterarLimiteCliente</li>
-          <li>[put] {url}/alterarPlanoCliente</li>
+          <li>[get] {url}/financeiro/cliente/saldo/:cliente_id (consulta saldo cliente)</li>
+          <li>[get] {url}/movimento/cliente/:id (consulta movimentos cliente)</li>
+          <li>[get] {url}/cliente/:id (consulta dados do cliente)</li>
+          <li>[post] {url}/movimento</li>
+          <li>[patch] {url}/financeiro/:id (alterar plano e limites de clientes)</li>
         </ul>
       </div>
     </div>
