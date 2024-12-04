@@ -12,18 +12,20 @@ $ npm install
 ## Rodar a aplicação
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-
-# database
+# iniciar banco de dados
 $ cd docker
 $ docker-compose up -d
+
+# desenvolvimento
+$ npm run start:dev
+
+# produção
+$ npm run start:prod
+
+# rodar aplicação com docker
+$ docker build -t big-chat-brasil .
+$ docker run -p 3000:3000 big-chat-brasil
+
 ```
 
 ## Teste
