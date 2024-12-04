@@ -42,6 +42,9 @@ export class SaldoController {
     @Param('id') cliente_id: string,
     @Body() updateFinanceiroDto: UpdateSaldoDto,
   ) {
-    return this.financeiroService.updateByClienteID(+cliente_id, updateFinanceiroDto);
+    return this.financeiroService.updateByClienteID(
+      +cliente_id,
+      updateFinanceiroDto,
+    );
   }
 }

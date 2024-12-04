@@ -11,7 +11,7 @@ export class Mensagem {
   @Column()
   numero_destino: string;
 
-  @Column()
+  @Column({ default: false })
   is_whatsapp: boolean;
 
   @Column()
