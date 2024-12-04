@@ -12,7 +12,7 @@ $ npm install
 ## Rodar a aplicação
 
 ```bash
-# iniciar banco de dados
+# iniciar banco de dados e build aplicação
 $ cd docker
 $ docker-compose up -d
 
@@ -21,10 +21,6 @@ $ npm run start:dev
 
 # produção
 $ npm run start:prod
-
-# rodar aplicação com docker
-$ docker build -t big-chat-brasil .
-$ docker run -p 3000:3000 big-chat-brasil
 
 ```
 

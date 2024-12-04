@@ -13,5 +13,19 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/01_init.sql
       - ./insert_data.sql:/docker-entrypoint-initdb.d/02_insert_data.sql
 
+#  app:
+#    build: ../.
+#    container_name: node_app
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - postgres
+#    networks:
+#      - app-network
+
 volumes:
   postgres_data:
+
+#networks:
+#  app-network:
+#    driver: bridge
