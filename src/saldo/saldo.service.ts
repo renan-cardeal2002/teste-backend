@@ -99,7 +99,7 @@ export class SaldoService {
       }
     }
 
-    await this.saldoRepository.update(
+    return await this.saldoRepository.update(
       { cliente_id: movimentoDto.cliente_id },
       { saldo: newSaldo, limite_utilizado: newLimiteUtilizado },
     );
