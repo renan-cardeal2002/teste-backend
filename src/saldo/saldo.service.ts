@@ -43,6 +43,10 @@ export class SaldoService {
     return this.saldoRepository.update({ id }, updateFinanceiroDto);
   }
 
+  updateByClienteID(cliente_id: number, updateFinanceiroDto: UpdateSaldoDto) {
+    return this.saldoRepository.update({ cliente_id }, updateFinanceiroDto);
+  }
+
   private async getDadosCliente(cliente_id: number) {
     const financeiroCliente = await this.findByClienteID(cliente_id);
     const cliente = await this.clienteService.findOne(cliente_id);

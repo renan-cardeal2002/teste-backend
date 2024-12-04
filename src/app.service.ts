@@ -53,8 +53,8 @@ export class AppService {
           <li>[get] {url}/financeiro/cliente/saldo/:cliente_id (consulta saldo cliente)</li>
           <li>[get] {url}/movimento/cliente/:id (consulta movimentos cliente)</li>
           <li>[get] {url}/cliente/:id (consulta dados do cliente)</li>
-          <li>[post] {url}/movimento</li>
-          <li>[patch] {url}/financeiro/:id (alterar plano e limites de clientes)</li>
+          <li>[post] {url}/movimento (inserir créditos para o cliente)</li>
+          <li>[patch] {url}/financeiro/financeiro/:id (alterar plano e limites de clientes)</li>
         </ul>
       </div>
     </div>
