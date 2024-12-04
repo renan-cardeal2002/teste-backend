@@ -31,4 +31,5 @@ Premissas Assumidas no Desenvolvimento
    - O sistema está preparado para ser executado localmente via Docker Compose.
    - Foram criados testes unitários para o módulo "cliente".
    - Ao acessar http://localhost:3000/ estou mostrando alguma das principais funcionalidades, além do envio de mensagem.
+   - O foco do projeto foi no back-end, com o front para complementar e mostrar melhor a funcionalidade de enviar mensagem via WebSocket.
 
