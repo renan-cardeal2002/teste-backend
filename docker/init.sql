@@ -27,7 +27,8 @@ CREATE TABLE IF NOT EXISTS movimentos
     cliente_id      INT NOT NULL,
     tipo            INT NOT NULL,
     valor           DECIMAL(10, 2) NOT NULL,
-    observacao      VARCHAR(200)
+    observacao      VARCHAR(200),
+    FOREIGN KEY (cliente_id) REFERENCES clientes (id)
 );
 
 CREATE TABLE IF NOT EXISTS mensagens
