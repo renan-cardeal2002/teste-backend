@@ -32,4 +32,5 @@ Premissas Assumidas no Desenvolvimento
    - Foram criados testes unitários para o módulo "cliente".
    - Ao acessar http://localhost:3000/ estou mostrando alguma das principais funcionalidades, além do envio de mensagem.
    - O foco do projeto foi no back-end, com o front para complementar e mostrar melhor a funcionalidade de enviar mensagem via WebSocket.
+   - Não foi criado login no front-end.
 
